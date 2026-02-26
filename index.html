@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LemonadWebsite Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Навигация как на фото */
+        .navbar {
+            background-color: #1a1a1a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #888;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background-color: #333;
+            color: #fff;
+            box-shadow: 0 0 15px #444;
+        }
+
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        /* Приветственный блок как на фото */
+        .hero {
+            background: linear-gradient(145deg, #1e1e1e, #141414);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #666;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .hero p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Поисковый блок */
+        .search-section {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            border: 1px solid #333;
+        }
+
+        .search-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #bbb;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            background-color: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #888;
+            box-shadow: 0 0 20px #444;
+            background-color: #333;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-btn {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 2px solid #555;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .search-btn:hover {
+            background-color: #444;
+            border-color: #888;
+            box-shadow: 0 0 20px #666;
+            transform: translateY(-2px);
+        }
+
+        .example-token {
+            color: #888;
+            font-size: 0.9rem;
+            border-left: 3px solid #555;
+            padding-left: 1rem;
+            margin-left: 1rem;
+        }
+
+        .example-token strong {
+            color: #ccc;
+            background-color: #2a2a2a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* Результаты */
+        .results {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            border: 1px solid #333;
+            min-height: 200px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #333;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .results-content {
+            color: #d0d0d0;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .loading {
+            color: #888;
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            background-color: #2a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff4444;
+        }
+
+        /* Документация */
+        .docs {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #333;
+        }
+
+        .docs h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #444;
+        }
+
+        .docs h3 {
+            color: #ccc;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .docs pre {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #444;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .docs code {
+            background-color: #2a2a2a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #ffaa00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        td {
+            color: #bbb;
+        }
+
+        tr:hover {
+            background-color: #3a3a3a;
+        }
+
+        /* Футер */
+        .footer {
+            background-color: #1a1a1a;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-top: 2px solid #333;
+            color: #777;
+        }
+
+        .glow-text {
+            color: #fff;
+            text-shadow: 0 0 10px #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация как на фото -->
+    <div class="navbar">
+        <div class="logo">
+            LEMONADWEBSITE<span>studio</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" style="background-color: #333; color: #fff;">ГЛАВНАЯ</a>
+            <a href="#">FORSTAGEN</a>
+            <a href="#">0 НАС</a>
+            <a href="#">КОМАНДА</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Приветствие как на фото -->
+        <div class="hero">
+            <h1 class="glow-text">Добро пожаловать в LemonadWebsite</h1>
+            <p>Черно-серый стиль. Поиск по базам данных через API Leakosint</p>
+        </div>
+
+        <!-- Поисковый блок -->
+        <div class="search-section">
+            <label class="search-label">🔍 Введите номер телефона, email или текст для поиска:</label>
+            <input type="text" id="searchQuery" class="search-input" placeholder="Например: 7498655330 или example@gmail.com" value="7498655330">
+            
+            <div class="button-group">
+                <button class="search-btn" id="searchBtn">ПОИСК</button>
+                <div class="example-token">
+                    Тестовый токен: <strong>Got5n1mx</strong> (из документации)
+                </div>
+            </div>
+            <div style="margin-top: 0.8rem; color: #666; font-size: 0.85rem;">
+                ⚡ Лимит: 100 (по умолчанию) · Язык: ru
+            </div>
+        </div>
+
+        <!-- Результаты поиска -->
+        <div class="results" id="results">
+            <div class="results-header">
+                <span>📋 РЕЗУЛЬТАТЫ ПОИСКА</span>
+                <span id="status">ожидание запроса</span>
+            </div>
+            <div class="results-content" id="resultsContent">
+                Введите данные и нажмите "Поиск". Используется API Leakosint.
+            </div>
+        </div>
+
+        <!-- Документация API (полностью из описания) -->
+        <div class="docs">
+            <h2>📚 Документация API</h2>
+            
+            <h3>Получение данных через API</h3>
+            <p>Вы можете получать данные автоматически, используя API. Для этого вам нужно в боте написать команду /api и получить свой персональный токен. Изначально на нём будет 100 бесплатных запросов, которые позволят протестировать систему. Когда они закончатся, начнут тратиться деньги с вашего баланса.</p>
+            
+            <p>Цена запроса зависит от типа запроса и от указанного лимита поиска. По умолчанию лимит равен 100, при таком лимите большинство запросов будут стоить 0.003$.</p>
+            
+            <p><strong>Формула расчёта цены в долларах следующая:</strong><br>
+            <code>0.0002 * (5 + sqrt(Limit * Complexity))</code><br>
+            Limit — это лимит поиска, указанный вами (например, 100).<br>
+            Complexity — параметр, отражающий количество единичных поисков, которые необходимо выполнить для вашего запроса.</p>
+            
+            <p>Если запрос состоит из нескольких слов, то они ищутся во всех возможных перестановках, а поэтому сложность зависит от количества слов в вашем запросе. Вот пример расчёта сложности:</p>
+            <ul style="margin-left: 2rem; color: #bbb;">
+                <li>1 слово: Complexity = 1</li>
+                <li>2 слова: Complexity = 5</li>
+                <li>3 слова: Complexity = 16</li>
+                <li>Больше 3 слов: Complexity = 40</li>
+            </ul>
+            
+            <p>При этом следующие элементы не считаются словами:</p>
+            <ul style="margin-left: 2rem; color: #bbb;">
+                <li>Даты</li>
+                <li>Строки короче 4 символов</li>
+                <li>Числа короче 6 символов</li>
+            </ul>
+            
+            <p>Если вам нужно избежать деления запроса на слова по пробелам, используйте двойные кавычки. Словосочетания в двойных кавычках воспринимаются как одно слово.</p>
+            
+            <p><strong>Примечание:</strong> Ограничение на частоту запросов с одного IP — 3 запроса в секунду. Если вам нужно выполнять больше запросов, вы можете объединять несколько запросов в один или создать отдельный ключ на вкладке /app.</p>
+            
+            <h3>Параметры запроса</h3>
+            <table>
+                <tr>
+                    <th>Параметр</th>
+                    <th>Описание</th>
+                </tr>
+                <tr>
+                    <td>'token'</td>
+                    <td>Токен, который вы получаете после выполнения команды /api.</td>
+                </tr>
+                <tr>
+                    <td>'request'</td>
+                    <td>Строка с вашим запросом либо массив строк с несколькими запросами.</td>
+                </tr>
+                <tr>
+                    <td>'limit'</td>
+                    <td>Лимит поиска (по умолчанию 100). Число от 100 до 10 000. Определяет количество возвращаемых результатов и диапазон поиска в базе.</td>
+                </tr>
+                <tr>
+                    <td>'lang'</td>
+                    <td>Код языка, на котором будут результаты запроса (по умолчанию en).</td>
+                </tr>
+                <tr>
+                    <td>'type'</td>
+                    <td>Тип отчёта: json, short, html (по умолчанию json).</td>
+                </tr>
+                <tr>
+                    <td>'bot_name'</td>
+                    <td>Имя бота в формате @name (необходимо указать, если бот не относится к основной группе зеркал).</td>
+                </tr>
+            </table>
+            
+            <h3>Примеры запросов</h3>
+            <pre>Пример 1:
+{"token":"987654321:b42vAQjW", "request":"google"}
+
+Пример 2:
+{"token":"987654321:b42vAQjW", "request":"Петя Иванов", "lang": "ru"}
+
+Пример 3:
+{"token":"987654321:b42vAQjW", "request":"example@gmail.com", "limit": 300}
+
+Пример 4:
+{"token":"987654321:b42vAQjW", "request":"Elon Reeve Musk", "limit": 100, "lang":"ru"}
+
+Пример 5:
+{"token":"987654321:b42vAQjW", "request":"example@gmail.com\nElon Reeve Musk"}
+
+Пример 6:
+{"token":"987654321:b42vAQjW", "request":["example@gmail.com","Elon Reeve Musk"]}</pre>
+            
+            <h3>Пример кода (Python)</h3>
+            <p>Пример использования API на языке Python:</p>
+            <pre>import requests
+
+data = {"token":"987654321:Vg41g0qY", "request":"test request", "limit": 100, "lang":"ru"}
+url = 'https://leakosintapi.com/'
+response = requests.post(url, json=data)
+print(response.json())</pre>
+            <p><strong>Обратите внимание:</strong> Данные запроса отправляются в формате JSON. Если отправлять в виде параметров запроса, вы получите ошибку 501.</p>
+            
+            <h3>Пример телеграм-бота на основе API</h3>
+            <p>Полный код бота представлен в описании (он слишком большой для вставки сюда, но его можно найти в исходных материалах).</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        lemonadwebsite.github.io © 2024 | Черно-серый стиль | Данные предоставлены Leakosint API
+    </div>
+
+    <script>
+        // Конфигурация
+        const API_URL = 'https://leakosintapi.com/';
+        // Токен из примера (можно заменить на свой)
+        const DEFAULT_TOKEN = 'Got5n1mx';
+        
+        const searchBtn = document.getElementById('searchBtn');
+        const searchQuery = document.getElementById('searchQuery');
+        const resultsContent = document.getElementById('resultsContent');
+        const statusSpan = document.getElementById('status');
+
+        // Функция поиска
+        async function performSearch() {
+            const query = searchQuery.value.trim();
+            
+            if (!query) {
+                resultsContent.innerHTML = '<span class="error-message">❌ Введите запрос для поиска</span>';
+                return;
+            }
+
+            // Показываем загрузку
+            resultsContent.innerHTML = '<div class="loading">🔍 Выполняется поиск... (может занять несколько секунд)</div>';
+            statusSpan.innerText = 'поиск...';
+
+            try {
+                // Формируем запрос как в документации
+                const requestData = {
+                    token: DEFAULT_TOKEN,
+                    request: query,
+                    limit: 100,
+                    lang: 'ru'
+                };
+
+                console.log('Отправляем запрос:', requestData);
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ошибка ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Ответ API:', data);
+
+                // Проверка на ошибки
+                if (data.Error) {
+                    throw new Error(data.Error);
+                }
+
+                // Форматируем вывод
+                let formattedOutput = '';
+                
+                if (data.List && Object.keys(data.List).length > 0) {
+                    formattedOutput += `📊 Найдено баз: ${Object.keys(data.List).length}\n\n`;
+                    
+                    for (const [dbName, dbData] of Object.entries(data.List)) {
+                        formattedOutput += `【 ${dbName} 】\n`;
+                        
+                        if (dbData.InfoLeak) {
+                            formattedOutput += `📌 ${dbData.InfoLeak}\n`;
+                        }
+                        
+                        if (dbData.Data && dbData.Data.length > 0) {
+                            dbData.Data.forEach((item, index) => {
+                                if (index < 3) { // Показываем первые 3 записи для компактности
+                                    for (const [key, value] of Object.entries(item)) {
+                                        formattedOutput += `   • ${key}: ${value}\n`;
+                                    }
+                                    formattedOutput += '\n';
+                                }
+                            });
+                            
+                            if (dbData.Data.length > 3) {
+                                formattedOutput += `   ... и еще ${dbData.Data.length - 3} записей\n\n`;
+                            }
+                        } else {
+                            formattedOutput += '   Нет данных\n\n';
+                        }
+                        formattedOutput += '───────────────────\n\n';
+                    }
+                } else if (data.message) {
+                    formattedOutput = data.message;
+                } else {
+                    formattedOutput = '✅ Запрос выполнен, но данные отсутствуют';
+                }
+
+                // Добавляем информацию о статусе
+                if (data.status) {
+                    statusSpan.innerText = `статус: ${data.status}`;
+                } else {
+                    statusSpan.innerText = 'успешно';
+                }
+
+                resultsContent.innerHTML = formattedOutput.replace(/\n/g, '<br>');
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultsContent.innerHTML = `<span class="error-message">❌ Ошибка: ${error.message}. Попробуйте другой токен или запрос.</span>`;
+                statusSpan.innerText = 'ошибка';
+            }
+        }
+
+        // Обработчик кнопки
+        searchBtn.addEventListener('click', performSearch);
+
+        // Обработчик Enter в поле ввода
+        searchQuery.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Автоматический поиск при загрузке (демонстрация)
+        window.addEventListener('load', () => {
+            // Можно выполнить автоматический поиск, но закомментируем, чтобы не спамить
+            // setTimeout(performSearch, 500);
+        });
+    </script>
+</body>
+</html>
